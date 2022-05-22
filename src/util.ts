@@ -1,8 +1,9 @@
-import { createWriteStream, unlink } from 'fs';
-import { get } from 'https';
-import ErrnoException = NodeJS.ErrnoException;
+import {createWriteStream, unlink} from 'node:fs';
+import {get} from 'node:https';
+import ErrnoException = NodeJS.ErrnoException
 
 export const parseResponse = <T>(s: string): T => {
+  // eslint-disable-next-line no-eval
   return eval('(' + s + ')');
 };
 

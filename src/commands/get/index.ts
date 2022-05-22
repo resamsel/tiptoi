@@ -1,11 +1,11 @@
-import { Command } from '@oclif/core';
-import { flags } from '@oclif/core/lib/parser';
+import {Command} from '@oclif/core';
+import {flags} from '@oclif/core/lib/parser';
+import {Axios} from 'axios';
 import ux from 'cli-ux';
-import { Axios } from 'axios';
-import { Answers, DistinctChoice, prompt } from 'inquirer';
-import * as os from 'os';
-import { download, parseResponse } from '../../util';
-import { SearchResponse } from '../../model';
+import {Answers, DistinctChoice, prompt} from 'inquirer';
+import * as os from 'node:os';
+import {SearchResponse} from '../../model';
+import {download, parseResponse} from '../../util';
 
 const baseUrl = 'https://www.ravensburger.de';
 const path = '/produkte/kinderbuecher/tiptoi/tiptoi-entdecke-die-tiere-afrikas-32909/searchSuggest.form';
@@ -24,11 +24,15 @@ const getProducts = (axios: Axios, answers: Answers): Promise<DistinctChoice[]> 
 };
 
 export default class GetCommand extends Command {
-  static description = 'Get tiptoi® .gme files';
+  static description = 'Get tiptoi® .gme files'
 
   static flags = {
-    'target': flags.string({char: 't', description: 'Download .gme file to this directory', default:  os.homedir() + '/Downloads/'}),
-  };
+    'target': flags.string({
+      char: 't',
+      description: 'Download .gme file to this directory',
+      default: os.homedir() + '/Downloads/',
+    }),
+  }
 
   async run(): Promise<void> {
     const {flags} = await this.parse(GetCommand);
@@ -56,6 +60,7 @@ export default class GetCommand extends Command {
                 if (err) {
                   return this.log(`Could not download ${link} (${err})`);
                 }
+
                 this.log('Downloaded to ' + dest);
               });
             }
